@@ -242,9 +242,6 @@ print("=" * 60)
 print("\nStarting server on http://127.0.0.1:5000")
 print("Press CTRL+C to quit\n")
 
-if __name__ == '__main__':
-    def open_browser():
-        webbrowser.open('http://127.0.0.1:5000')
-    
-    threading.Timer(1.5, open_browser).start()
-    app.run(debug=True, port=5000, use_reloader=False)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
