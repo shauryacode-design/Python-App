@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='uploads/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css', v='1') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/property.css', v='1') }}">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Dealer Dashboard</h1>
+        <nav style="float: right;">
+            <a href="/">Home</a>
+            <a href="/dealer/add-property">Add Property</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>Welcome, {{ session.username }}!</h2>
+        </div>
+
+        <div class="card">
+            <h2>Your Properties ({{ properties|length }})</h2>
+            {% if properties %}
+            <div class="properties" style="margin-top: 1.5rem;">
+                {% for p in properties %}
+                <div class="property-card">
+                    <h3>{{ p.title }}</h3>
+                    <p style="color: #666;">📍 {{ p.city }}</p>
+                    <p style="color: #667eea; font-weight: bold;">₹{{ "%.2f"|format(p.total_price / 100000) }}L</p>
+                    <a href="/property/{{ p.id }}" class="btn">View</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p style="margin-top: 1rem; color: #666;">No properties yet. <a href="/dealer/add-property">Add one</a></p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

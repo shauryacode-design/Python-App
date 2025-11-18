@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Real Estate System</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='uploads/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css', v='1') }}">
+</head>
+<body>
+    <div class="navbar">
+        <h1><img src="{{ url_for('static', filename='uploads/logo.png') }}" alt="Logo" class="navbar-logo"> Madhu RealEstate</h1>
+        <nav>
+            <a href="/">Home</a>
+            {% if session.user_id %}
+                {% if session.user_type == 'dealer' %}
+                    <a href="/dealer/dashboard">Dashboard</a>
+                    <a href="/dealer/add-property">Add Property</a>
+                {% else %}
+                    <a href="/buyer/dashboard">Dashboard</a>
+                {% endif %}
+                <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            {% endif %}
+        </nav>
+    </div>
+
+    <div class="container">
+        {% if session.user_id %}
+        <div class="user-info">
+            <strong>Welcome, {{ session.username }}!</strong> ({{ session.user_type|capitalize }})
+        </div>
+        {% endif %}
+
+        <div class="hero">
+            <h2>Find Your Perfect Plot in India</h2>
+            <p style="color: #666; margin: 1rem 0;">Connect with dealers and explore properties with 3D visualization and pricing calculators</p>
+            {% if not session.user_id %}
+            <a href="/register?type=buyer" class="btn">Get Started as Buyer</a>
+            <a href="/register?type=dealer" class="btn btn-secondary">Register as Dealer</a>
+            {% endif %}
+        </div>
+
+        {% if properties %}
+        <h2 style="color: #432818; margin: 2rem 0 1rem;">Available Properties ({{ properties|length }})</h2>
+        <div class="properties">
+            {% for property in properties %}
+            <div class="property-card">
+                <h3 class="property-title">{{ property.title }}</h3>
+                <p style="color: #666;">📍 {{ property.city }}, {{ property.state }}</p>
+                <div class="property-price">₹{{ "%.2f"|format(property.total_price / 100000) }}L</div>
+                <p style="color: #666;">Area: {{ "%.0f"|format(property.area_sqyard) }} sq yd</p>
+                <p style="color: #666;">₹{{ "%.0f"|format(property.price_per_sqyard) }}/sq yd</p>
+                <a href="/property/{{ property.id }}" class="btn" style="margin-top: 1rem; display: block; text-align: center;">View Details</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="status">
+            <h3>No Properties Available Yet</h3>
+            <p style="color: #666; margin: 1rem 0;">Be the first dealer to list a property!</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

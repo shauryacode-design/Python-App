@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{font-family: "Montserrat", sans-serif;}
+body{background-color:#f8f6f0 }
+.site-bg { min-height: 100vh; padding-bottom: 60px; }
+.container { max-width: 1100px; margin: 30px auto; padding: 0 24px; }
+.back-btn { display: inline-block; background: #432818; color: white; padding: 8px; border-radius: 8px; text-decoration: none; margin-bottom: 14px; font-size: 20px; }
+.header { background: #ffffff; padding: 28px; border-radius: 12px; margin-bottom: 22px; box-shadow: 0 10px 30px rgba(15,23,42,0.04); }
+.header h1 { margin: 0 0 6px 0; font-size: 28px; color: #111827; font-weight: 700; }
+.header p { margin: 6px 0 0 0; color: #6b7280; }
+.property-price { color: #386641; font-size: 40px; font-weight: 800; margin-top: 6px; }
+.grid { display: grid; grid-template-columns: 2fr 1fr; gap: 26px; align-items: start; }
+.card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 8px 30px rgba(15,23,42,0.03);margin-bottom: 15px; }
+.card h3 { margin: 0 0 14px 0; font-size: 18px; color: #111827; }
+.detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.detail-item { padding: 18px; background: #fbfbfb; border-radius: 8px; border: 1px solid #f0f0f0; }
+.detail-label { color: #9ca3af; font-size: 13px; margin-bottom: 6px; display: block; }
+.detail-value { color: #111827; font-size: 16px; font-weight: 700; }
+canvas#plot { width: 100%; height: 300px; background: #ffffff; border-radius: 8px; display: block; border: 1px solid #eee; }
+.dealer-avatar { width: 120px; height: 120px; border-radius: 50%; background: #386641; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 42px; margin: 16px auto; box-shadow: 0 6px 18px rgba(15,23,42,0.06); }
+.dealer-card { text-align: center; }
+.btn, .contact-btn { background: #386641; color: white; padding: 12px 0px; border-radius: 10px; border: none; display: inline-block; text-decoration: none; width: 100%; }
+.btn:hover, .contact-btn:hover { opacity: 0.95; }
+.calculator input { width: 300px; padding: 10px; border: 1px solid #e6e8eb; border-radius: 8px; margin-bottom: 15px; align-items: center; }
+.calc-card{display: flex; align-items: center; justify-content: center; flex-direction: column; }
+.calc-result { background: #eef2ff; color: #386641; padding: 12px; border-radius: 8px; text-align: left; font-size: 16px; font-weight: 700; }
+.property-meta { display:flex; gap: 12px; margin-top: 10px; }
+.property-meta div { flex:1 }
+.price-small { color: #6b7280; font-size: 14px; }

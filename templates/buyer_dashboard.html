@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='uploads/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css', v='1') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/property.css', v='1') }}">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Buyer Dashboard</h1>
+        <nav style="float: right;">
+            <a href="/">Browse Properties</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>Welcome, {{ session.username }}!</h2>
+        </div>
+
+        <div class="card">
+            <h2>Your Inquiries ({{ inquiries|length }})</h2>
+            {% if inquiries %}
+                {% for inq in inquiries %}
+                <div class="inquiry">
+                    <h3>{{ inq.property.title }}</h3>
+                    <p style="color: #666;">{{ inq.message }}</p>
+                    <p style="color: #999; font-size: 0.9rem;">{{ inq.created_at.strftime('%d %b %Y') }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+            <p style="margin-top: 1rem; color: #666;">No inquiries yet. <a href="/">Browse properties</a></p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

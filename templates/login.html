@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='uploads/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css', v='1') }}">
+</head>
+
+<body>
+    <div class="center login-center">
+        <div class="form-box">
+            <h1>Login</h1>
+            {% if error %}<div class="error">{{ error }}</div>{% endif %}
+            {% if success %}<div class="success">{{ success }}</div>{% endif %}
+            <form method="POST">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <div class="links">
+                <p>Don't have an account? <a href="/register">Register</a></p>
+                <p><a href="/">Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
