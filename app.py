@@ -8,19 +8,34 @@ print("=" * 60)
 print("Indian Real Estate Management System - Starting...")
 print("=" * 60)
 
+from dotenv import load_dotenv
+load_dotenv()
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import os
 import json
+from os import getenv
 import webbrowser
 import threading
 
+
+# Read DATABASE_URL from environment. Use sqlite fallback for local dev.
+DATABASE_URL = os.environ.get('DATABASE_URL') or os.environ.get('DATABASE_URI') or 'sqlite:///real_estate.db'
+# SQLAlchemy accepts 'postgresql://' as the scheme. Some providers return 'postgres://'; normalize it.
+if DATABASE_URL.startswith('postgres://'):
+    DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+if not DATABASE_URL:
+    print("❌ ERROR: DATABASE_URL not found! Check your .env file.")
+    raise RuntimeError("DATABASE_URL missing")
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'indian-real-estate-secret-key-2024'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///real_estate.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+print("Loaded DATABASE_URL =", DATABASE_URL)
 
 db = SQLAlchemy(app)
 
@@ -233,13 +248,27 @@ def create_inquiry():
 
 # Initialize database
 with app.app_context():
-    db.create_all()
-    print("✓ Database tables created")
+    # Attempt to create tables; if there is a DB connection error, show it clearly so the
+    # developer can update the DATABASE_URL, install psycopg2, or allow remote connections.
+    try:
+        db.create_all()
+        print("✓ Database tables created")
+    except Exception as e:
+        # Provide helpful debug output for common errors (connection, authentication, SSL)
+        import traceback
+        print("❌ Failed to create tables in the configured database. Exception:")
+        traceback.print_exc()
+        print("\nCheck these things:")
+        print(" 1) Is DATABASE_URL set correctly in environment?")
+        print(" 2) Does the connection string use proper URL encoding for special characters in username/password?")
+        print(" 3) If using a hosted DB (Railway/Postgres), ensure your app host can reach the DB hostname (internal hosts may not be reachable from your local machine) and that the DB allows connections.")
+        print(" 4) Ensure psycopg2-binary is installed and available (pip install psycopg2-binary).")
+        raise
 
 print("=" * 60)
 print("✓ Application ready!")
 print("=" * 60)
-print("\nStarting server on http://127.0.0.1:5000")
+print("\nStarting server on http://127.0.0.1:8080")
 print("Press CTRL+C to quit\n")
 
 if __name__ == "__main__":
